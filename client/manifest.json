@@ -1,0 +1,14 @@
+{
+    "manifest_version": 2,
+    "name": "Deal Finder",
+    "version": "1.0",
+    "description": "Find deals on your favorite items.",
+    "permissions": ["activeTab"],
+    "browser_action": {
+      "default_icon": {
+
+      },
+      "default_popup": "popup.html"
+    }
+  }
+  
