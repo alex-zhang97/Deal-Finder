@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   
       const data = await response.json();
+      console.log(data.deals);
       displayDeals(data.deals);
     } catch (error) {
       console.error('Error fetching deals:', error);
@@ -27,6 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function displayDeals(deals) {
     const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `<p>Found ${deals.length} deals:</p><ul>${deals.map(deal => `<li>${deal}</li>`).join('')}</ul>`;
-  }
   
+    // Create a list of deals with price and image information
+    const dealsList = deals.map(deal => {
+      const title = deal.title;
+      const price = deal.price ? `${deal.price.symbol}${deal.price.amount}` : 'Price not available';
+      const image = deal.images.length > 0 ? `<a href="https://www.amazon.com/dp/${deal.asin}"><img src="${deal.images[0].image}" alt="Product Image" /></a>` : 'Image not available';
+  
+      // Display title, price, and image for each deal
+      return `<li>
+                <p><strong>${title}</strong></p>
+                <p>${price}</p>
+                <p>${image}</p>
+              </li>`;
+    }).join('');
+  
+    // Display the deals list in the resultDiv
+    resultDiv.innerHTML = `<p>Found ${deals.length} deals:</p><ul>${dealsList}</ul>`;
+  }
