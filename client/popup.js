@@ -1,11 +1,27 @@
+//Global var contianing product data from api calls
+var data;
+
 document.addEventListener('DOMContentLoaded', function() {
+    //Event listeners for each desired action
     const searchBtn = document.getElementById('searchBtn');
+    const amazonBtn = document.getElementById('amazonBtn');
+    const otherBtn = document.getElementById('otherBtn');
+    //Load data from api calls
     searchBtn.addEventListener('click', function() {
       const item = document.getElementById('item').value;
       if (item.trim() !== '') {
         findDeals(item);
       }
     });
+    //Display Amazon data
+    amazonBtn.addEventListener('click', function() {
+      displayAmazon(data.amazon);
+    });
+    //Display other data (currently nothing)
+    otherBtn.addEventListener('click', function(){
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '<p>There\s nothing here</p>';
+    })
   });
   
   async function findDeals(item) {
@@ -20,9 +36,10 @@ document.addEventListener('DOMContentLoaded', function() {
         body: JSON.stringify({ item }),
       });
   
-      const data = await response.json();
-      console.log(data.deals.amazon);
-      displayDeals(data.deals.amazon);
+      data = await response.json();
+      resultDiv.innerHTML = '<p>Done!</p>';
+      console.log(data.deals);
+      // displayDeals(data.deals.amazon);
     } catch (error) {
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = '<p>Error retrieving products</p>';
@@ -30,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  function displayDeals(source) {
+  function displayAmazon(source) {
     const resultDiv = document.getElementById('result');
   
     // Create a list of deals with price and image information
