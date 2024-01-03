@@ -7,6 +7,13 @@ body {
   .container {
     text-align: center;
   }
+
+  .src-bar {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+    background-color: black;
+  }
   
   input {
     padding: 5px;
