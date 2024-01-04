@@ -1,7 +1,6 @@
 //Global var contianing product data from api calls
 var data;
 
-document.addEventListener('DOMContentLoaded', function() {
     //Event listeners for each desired action
     const searchBtn = document.getElementById('searchBtn');
     const amazonBtn = document.getElementById('amazonBtn');
