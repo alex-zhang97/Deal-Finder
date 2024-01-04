@@ -1,25 +1,32 @@
-//Global var contianing product data from api calls
-var data;
+document.addEventListener('DOMContentLoaded', function() {
+    //var contianing product data from api calls
+    var data = "nothing";
 
     //Event listeners for each desired action
     const searchBtn = document.getElementById('searchBtn');
     const amazonBtn = document.getElementById('amazonBtn');
     const otherBtn = document.getElementById('otherBtn');
     //Load data from api calls
-    searchBtn.addEventListener('click', function() {
+    searchBtn.addEventListener('click', async function() {
       const item = document.getElementById('item').value;
       if (item.trim() !== '') {
-        findDeals(item);
+        data = await findDeals(item);
+        console.log(data.deals);
       }
     });
     //Display Amazon data
     amazonBtn.addEventListener('click', function() {
-      displayAmazon(data.amazon);
+      console.log(data);
+      if (data && data.deals.amazon) {
+        displayAmazon(data.deals.amazon);
+      } else {
+        console.log('No Amazon data available');
+      }
     });
     //Display other data (currently nothing)
     otherBtn.addEventListener('click', function(){
       const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = '<p>There\s nothing here</p>';
+      resultDiv.innerHTML = '<p>There\'s nothing here</p>';
     })
   });
   
@@ -35,10 +42,11 @@ var data;
         body: JSON.stringify({ item }),
       });
   
-      data = await response.json();
+      const res = await response.json();
       resultDiv.innerHTML = '<p>Done!</p>';
-      console.log(data.deals);
+      // console.log(res.deals);
       // displayDeals(data.deals.amazon);
+      return res;
     } catch (error) {
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = '<p>Error retrieving products</p>';

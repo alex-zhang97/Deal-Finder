@@ -15,19 +15,12 @@ def find_deals():
         res = {}
 
         if item:
-            res['amazon'] = search_amazon(item).get_json('amazon')
+            res['amazon'] = search_amazon(item)#.get_json('amazon')
             return jsonify({'deals': res})
         else:
             return jsonify({'error': 'Item not provided'}), 400
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
-
-    # Return deals in an array
-    # a = []
-    # for i in range(random.randint(0,10)):
-    #     a.append(str(random.randint(0,10)))
-    # return jsonify({'deals': a})
 
 def search_amazon(item):
     url = "https://parazun-amazon-data.p.rapidapi.com/search/"
@@ -44,15 +37,8 @@ def search_amazon(item):
         # Parse JSON data
         data = response.json()
 
-        # Access the "results" key and iterate through the products
-                
-        # for product in data["results"]:
-        #     # Append the title of each product to the 'deals' list
-        #     deals.append(product["title"])
-        #     print(deals[-1])
-
         # Return the results as JSON
-        return jsonify({'amazon': data['results']})
+        return data['results']
 
     else:
         # Handle unsuccessful API request
