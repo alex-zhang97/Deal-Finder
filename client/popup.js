@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultDiv = document.getElementById('result');
     resultDiv.innerHTML = '<p>Searching...</p>';
     try {
-      const response = await fetch('http://127.0.0.1:5000/find_deals', {
+      const response = await fetch('http://ec2-18-216-213-195.us-east-2.compute.amazonaws.com:5000/find_deals', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
